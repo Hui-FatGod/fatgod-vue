@@ -41,10 +41,12 @@ class RefImpl<T> {
     // 触发更新
     private trigger() {
         let link: Link | undefined = this.subsHead
+        const pendingSubs: Function[] = []
         while (link) {
-            link.sub()
+            pendingSubs.push(link.sub)
             link = link.nextSub
         }
+        pendingSubs.forEach(pendingSub => pendingSub())
     }
 }
 
