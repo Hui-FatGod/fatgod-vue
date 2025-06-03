@@ -1,5 +1,4 @@
-import { ref } from '../reactivity/ref'
-import { effect } from '../reactivity/effect'
+import { ref, effect } from '../reactivity'
 
 const gameName = ref('Dark Souls')
 

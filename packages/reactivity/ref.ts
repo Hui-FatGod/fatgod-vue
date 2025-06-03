@@ -1,6 +1,5 @@
 import { ReactiveFlags } from './constant'
 import { activeSub } from './effect'
-import * as trace_events from "node:trace_events";
 
 class RefImpl<T> {
     public _value: T
