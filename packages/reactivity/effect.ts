@@ -1,8 +1,32 @@
-export let activeSub: Function | undefined = undefined
+/**
+ * 订阅者接口
+ */
+export interface Subscriber {
+    notify: () => void
+}
+
+export let activeSub: ReactiveEffect | undefined = undefined
+
+export class ReactiveEffect implements Subscriber {
+    constructor(public fn: Function) {
+    }
+
+    run(): void {
+        const prevSub = activeSub
+        try {
+            activeSub = this
+            activeSub.fn()
+        } finally {
+            activeSub = prevSub
+        }
+    }
+
+    notify(): void {
+        this.fn()
+    }
+}
 
 export function effect(fn: Function): void {
-    let prevSub = activeSub
-    activeSub = fn
-    activeSub()
-    activeSub = prevSub
+    const e = new ReactiveEffect(fn)
+    e.run()
 }
